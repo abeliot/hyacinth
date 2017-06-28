@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"    
+    xmlns:tx="http://www.springframework.org/schema/tx"   
+    xsi:schemaLocation="    
+    http://www.springframework.org/schema/context    
+    http://www.springframework.org/schema/context/spring-context.xsd    
+    http://www.springframework.org/schema/beans    
+    http://www.springframework.org/schema/beans/spring-beans.xsd    
+    http://www.springframework.org/schema/tx    
+    http://www.springframework.org/schema/tx/spring-tx.xsd"> 
+
+
+	<!-- db1 开始 -->
+	<bean id="db1.dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${db1.driver}" />
+		<property name="jdbcUrl" value="${db1.url}" />
+		<property name="user" value="${db1.user}" />
+		<property name="password" value="${db1.password}" />	
+		<property name="preferredTestQuery" value="${db1.testQuery}" />		
+		<property name="minPoolSize" value="5" />		
+        <property name="maxPoolSize" value="200" />
+        <property name="initialPoolSize" value="10" />               
+        <property name="idleConnectionTestPeriod" value="5" />
+        <property name="maxIdleTime" value="60" />
+        <property name="acquireIncrement" value="5" />  
+        <property name="acquireRetryAttempts" value="10" />
+        <property name="acquireRetryDelay" value="1000" />        
+        <property name="checkoutTimeout" value="10000" />
+        <property name="testConnectionOnCheckin" value="true" />
+	</bean>
+
+	<bean id="db1.txManager"	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="db1.dataSource" />
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="db1.txManager" />
+
+	<bean id="db1.sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:com/abeliot/app/dao/db1/mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:com/abeliot/app/dao/db1/sqlmap/*.xml"/>
+        <property name="dataSource" ref="db1.dataSource"/>
+    </bean>
+    
+    <bean id="db1.sqlSessionTemplateSimple" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="db1.sqlSessionFactory"/>
+        <constructor-arg index="1" value="SIMPLE"/>
+    </bean>
+    
+    <bean id="db1.sqlSessionTemplateBatch" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="db1.sqlSessionFactory"/>
+        <constructor-arg index="1" value="BATCH"/>
+    </bean>
+   
+    
+ 
+
+	<!-- db1 结束 -->
+	
+</beans>

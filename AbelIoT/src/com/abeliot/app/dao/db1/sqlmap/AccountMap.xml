@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.abeliot.app.dao.db1.entity.Account">
+	
+	
+	<resultMap id="accountResultMap" type="db1.Account">
+		<id property="id" column="id" />
+		<result property="login_name" column="login_name"/>
+		<result property="login_passwd" column="login_passwd"/>
+		<result property="display_name" column="display_name"/>
+		<result property="register_date" column="register_date"/>
+		<result property="update_date" column="update_date"/>
+		<result property="account_status" column="account_status"/>
+	</resultMap>
+
+	<select id="queryById" resultMap="accountResultMap" >
+		select * from account where id = #{id}
+	</select>
+	
+	<select id="selectByLoginName" resultMap="accountResultMap" >
+		select * from account where login_name = #{login_name}
+	</select>
+	 
+	<insert id="replaceObj" parameterType="db1.Account">
+	 	replace into account(login_name, login_passwd, display_name, register_date) 
+	 	values(#{login_name}, #{login_passwd}, #{display_name}, sysdate())
+	</insert>
+	 
+	<insert id="insertObj" parameterType="db1.Account">
+	 	insert into account(login_name, login_passwd, display_name, register_date) 
+	 	values(#{login_name}, #{login_passwd}, #{display_name}, sysdate())
+	</insert>
+	
+	<delete id="deleteById" parameterType="Integer">
+		delete from account where id = #{id}
+	</delete>
+	 
+	<update id="updateObj" parameterType="db1.Account">
+	 	update account 
+	 	<set>
+	 		<if test="login_name != null">login_name = #{login_name},</if>
+	 		<if test="login_passwd != null">login_passwd = #{login_passwd},</if>
+	 		<if test="display_name != null">display_name = #{display_name},</if>
+	 		<if test="account_status != null">account_status = #{account_status},</if>
+			<if test="update_date != null">update_date = #{update_date}</if>
+	 	</set>
+	 	where id = #{id}
+	</update>
+	
+	<select id="queryList" resultMap="accountResultMap">
+		<![CDATA[ ${_parameter} ]]>
+	</select>
+		
+</mapper>

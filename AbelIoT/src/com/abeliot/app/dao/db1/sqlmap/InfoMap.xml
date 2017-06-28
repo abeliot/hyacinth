@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.abeliot.app.dao.db1.entity.Info">
+
+	<resultMap id="infoResultMap" type="Info">
+		<id property="id" column="id" />
+		<result property="name" column="name"/>
+		<result property="age" column="age"/>
+	</resultMap>
+
+	<select id="queryById" resultMap="infoResultMap" >
+		select * from info where id = #{id}
+	</select>
+	 
+	<insert id="insertObj" parameterType="Info">
+	 	insert into info values(#{id}, #{name}, #{age})
+	</insert>
+	
+	<delete id="deleteById">
+		delete from info where id = #{id}
+	</delete>
+	
+	<select id="queryList" resultMap="infoResultMap">
+		<![CDATA[ ${_parameter} ]]>
+	</select>
+	
+</mapper>

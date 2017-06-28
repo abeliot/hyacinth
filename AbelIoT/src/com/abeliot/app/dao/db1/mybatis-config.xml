@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	
+	<typeAliases>
+		<typeAlias alias="Info" type="com.abeliot.app.dao.db1.entity.Info"/>
+		<typeAlias alias="db1.Account" type="com.abeliot.app.dao.db1.entity.Account"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="com/abeliot/framework/base/BaseMapper.xml" />
+	</mappers>
+	
+</configuration>

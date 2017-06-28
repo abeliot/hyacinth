@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>IoTP</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:/**/applicationContext.xml</param-value>
+  </context-param>
+  
+  <servlet>
+	    <servlet-name>springDispatcher</servlet-name>
+	    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	    <init-param>
+	    	<param-name>contextConfigLocation</param-name>
+	    	<param-value>
+				/WEB-INF/servlet-context.xml
+			</param-value>
+		</init-param>
+	    <load-on-startup>1</load-on-startup>
+	</servlet>
+ 
+	<servlet-mapping>
+	    <servlet-name>springDispatcher</servlet-name>
+	    <url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	
+	<!-- 配置错误处理 -->
+	<!--
+	<error-page>
+		<error-code>404</error-code>
+		<location>/global/error/page_not_found.vm</location>
+	</error-page>
+		<error-page> <error-code>500</error-code>
+		<location>/global/error/server_internal_error.vm</location>
+		</error-page>
+	-->
+</web-app>
